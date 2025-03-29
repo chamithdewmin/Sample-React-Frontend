@@ -1,0 +1,99 @@
+/* General styling for the Book Appointment section */
+.book-appointment-wrapper {
+    padding: 50px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    max-width: 1000px; /* Increased width */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .book-appointment-wrapper h2 {
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 30px; /* Increased space below the title */
+  }
+  
+  /* Styling for the Appointment Table */
+  .appointment-table-wrapper {
+    margin-top: 40px;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .appointment-table {
+    width: 90%; /* Adjust the table width */
+    max-width: 900px; /* Ensure the table does not stretch too wide */
+    border-collapse: collapse;
+    text-align: center;
+    margin: 0 auto; /* Ensure the table is centered horizontally */
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .appointment-table th, .appointment-table td {
+    padding: 15px; /* Increased padding */
+    border: 1px solid #ddd;
+    font-size: 16px;
+  }
+  
+  .appointment-table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .appointment-table td {
+    background-color: #f9f9f9;
+  }
+  
+  .appointment-table tbody tr:nth-child(odd) td {
+    background-color: #f2f2f2;
+  }
+  
+  /* Button Styling */
+  .book-appointment-form button.submit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px 25px; /* Increased padding for the button */
+    font-size: 18px; /* Larger button text */
+    margin-top: 30px; /* More space above the button */
+    cursor: pointer;
+    width: 100%;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .book-appointment-form button.submit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Action Buttons in the Table */
+  .appointment-table .btn-sm {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+  
+  .book-appointment-wrapper .back-btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  
+  .book-appointment-wrapper .back-btn-container .btn {
+    background-color: #6c757d;
+    color: white;
+    padding: 12px 20px; /* Increased button size */
+    border-radius: 10px; /* Larger rounded corners */
+    font-size: 18px;
+    text-decoration: none;
+  }
+  
+  .book-appointment-wrapper .back-btn-container .btn:hover {
+    background-color: #5a6268;
+  }
+  

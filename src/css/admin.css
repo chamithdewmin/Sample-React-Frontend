@@ -1,0 +1,99 @@
+/* General Admin Page Styles */
+.admin-container {
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fc;
+  border-radius: 12px;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Admin Card (Main Box) */
+.admin-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  width: 80%;
+  max-width: 1100px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Header */
+.admin-header h1 {
+  background: #333;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 26px;
+}
+
+/* Admin Content */
+.admin-content h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.admin-content p {
+  font-size: 16px;
+  color: gray;
+  margin-bottom: 25px;
+}
+
+/* Management Section */
+.management-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* Manage Boxes */
+.manage-box {
+  flex: 1;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.manage-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.manage-box h3 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* Individual Colors */
+.manage-box .icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.manage-box .doctor { color: green; }
+.manage-box .users { color: blue; }
+.manage-box .appointments { color: orange; }
+
+/* Logout Button */
+.logout-btn {
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+}
