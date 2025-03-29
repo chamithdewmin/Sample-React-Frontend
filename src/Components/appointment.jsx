@@ -3,85 +3,85 @@ import { useLocation } from "react-router-dom";
 import "../css/appointment.css";
 import axios from "axios";
 
-const AppointmentPage = () => {
+const CoursePage = () => {
   const location = useLocation();
-  const { doctorId, doctorName, speciality, doctorCharge } = location.state || {};
+  const { courseId, courseName, courseSpeciality, courseFee } = location.state || {};
   
-  const [patientName, setPatientName] = useState("");
-  const [appointmentDate, setAppointmentDate] = useState("");
+  const [studentName, setStudentName] = useState("");
+  const [enrollmentDate, setEnrollmentDate] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   
 
   useEffect(() => {
-    console.log("Received doctor details:", location.state);
+    console.log("Received course details:", location.state);
   }, [location]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!doctorId || !doctorName || !speciality || !doctorCharge) {
-      alert("Doctor details not available.");
+    if (!courseId || !courseName || !courseSpeciality || !courseFee) {
+      alert("Course details not available.");
       return;
     }
 
-    const appointmentData = {
-      doctorId, 
-      doctorName, 
-      speciality, 
-      patientName,
+    const courseData = {
+      courseId, 
+      courseName, 
+      courseSpeciality,
+      studentName,
       contactNumber,
-      doctorCharge,
-      appointmentDate
+      courseFee,
+      enrollmentDate
     };
 
     try {
-      await axios.post("http://localhost:8082/rest-app/add", appointmentData);
-      alert("Appointment booked successfully!");
-      setPatientName("");
-      setAppointmentDate("");
+      await axios.post("http://localhost:8082/rest-app/add", courseData);
+      alert("Course enrollment successful!");
+      setStudentName("");
+      setEnrollmentDate("");
       setContactNumber("");
      
     } catch (error) {
-      console.error("Error booking appointment:", error);
-      alert("Error booking appointment. Please try again.");
+      console.error("Error enrolling in course:", error);
+      alert("Error enrolling in course. Please try again.");
     }
   };
 
   return (
     <div className="appointment-wrapper">
-      <h2>Book an Appointment</h2>
+      <h2>Enroll in Course</h2>
       <form onSubmit={handleSubmit} className="appointment-form">
         <div className="form-group">
-          <label htmlFor="doctorId">Doctor ID:</label>
-          <input type="text" id="doctorId" value={doctorId || ""} disabled />
+          <label htmlFor="courseId">Course ID:</label>
+          <input type="text" id="courseId" value={courseId || ""} disabled />
         </div>
         <div className="form-group">
-          <label htmlFor="doctorName">Doctor Name:</label>
-          <input type="text" id="doctorName" value={doctorName || ""} disabled />
+          <label htmlFor="courseName">Course Name:</label>
+          <input type="text" id="courseName" value={courseName || ""} disabled />
         </div>
         <div className="form-group">
-          <label htmlFor="speciality">Speciality:</label>
-          <input type="text" id="speciality" value={speciality || ""} disabled />
+          <label htmlFor="courseSpeciality">Course Speciality:</label>
+          <input type="text" id="courseSpeciality" value={courseSpeciality || ""} disabled />
         </div>
         <div className="form-group">
-          <label htmlFor="patientName">Patient Name:</label>
-          <input type="text" id="patientName" value={patientName} onChange={(e) => setPatientName(e.target.value)} required />
+          <label htmlFor="studentName">Student Name:</label>
+          <input type="text" id="studentName" value={studentName} onChange={(e) => setStudentName(e.target.value)} required />
         </div>
         <div className="form-group">
           <label htmlFor="contactNumber">Contact Number:</label>
           <input type="text" id="contactNumber" value={contactNumber} onChange={(e) => setContactNumber(e.target.value)} required />
         </div>
         <div className="form-group">
-          <label htmlFor="doctorCharge">Doctor's Charge (LK):</label>
-          <input type="number" id="doctorCharge" value={doctorCharge || ""} disabled />
+          <label htmlFor="courseFee">Course Fee (LK):</label>
+          <input type="number" id="courseFee" value={courseFee || ""} disabled />
         </div>
         <div className="form-group">
-          <label htmlFor="appointmentDate">Appointment Date:</label>
-          <input type="date" id="appointmentDate" value={appointmentDate} onChange={(e) => setAppointmentDate(e.target.value)} required />
+          <label htmlFor="enrollmentDate">Enrollment Date:</label>
+          <input type="date" id="enrollmentDate" value={enrollmentDate} onChange={(e) => setEnrollmentDate(e.target.value)} required />
         </div>
-        <button type="submit" className="submit-btn">Book Appointment</button>
+        <button type="submit" className="submit-btn">Enroll in Course</button>
       </form>
     </div>
   );
 };
 
-export default AppointmentPage;
+export default CoursePage;

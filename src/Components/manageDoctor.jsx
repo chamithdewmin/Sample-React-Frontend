@@ -1,96 +1,96 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Alert, Spinner, Modal, Form } from "react-bootstrap";
-import { FaUserMd, FaTrash, FaEdit, FaArrowLeft, FaPlus } from "react-icons/fa";
+import { FaPlus, FaEdit, FaTrash, FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Doctors = () => {
-  const [doctors, setDoctors] = useState([]);
+const Courses = () => {
+  const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
-  const [newDoctor, setNewDoctor] = useState({
-    doctorName: "",
-    speciality: "",
-    doctorFee: "",
-    phone: "",
-    email: "",
+  const [newCourse, setNewCourse] = useState({
+    courseName: "",
+    courseDuration: "",
+    courseFee: "",
+    instructor: "",
+    courseDescription: "",
   });
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchDoctors = async () => {
+    const fetchCourses = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:8083/cw-app/doctors");
-        setDoctors(response.data);
+        const response = await axios.get("http://localhost:8083/cw-app/courses");
+        setCourses(response.data);
       } catch (error) {
-        setError("There was an error fetching the doctors data.");
+        setError("There was an error fetching the courses data.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDoctors();
+    fetchCourses();
   }, []);
 
   // Handle Input Change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewDoctor((prev) => ({
+    setNewCourse((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  // Add New Doctor
-  const handleAddDoctor = async () => {
-    if (!newDoctor.doctorName || !newDoctor.speciality || !newDoctor.doctorFee || !newDoctor.phone || !newDoctor.email) {
+  // Add New Course
+  const handleAddCourse = async () => {
+    if (!newCourse.courseName || !newCourse.courseDuration || !newCourse.courseFee || !newCourse.instructor || !newCourse.courseDescription) {
       alert("All fields are required!");
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:8083/cw-app/doctors", newDoctor);
-      setDoctors([...doctors, response.data]);
+      const response = await axios.post("http://localhost:8083/cw-app/courses", newCourse);
+      setCourses([...courses, response.data]);
       setShowAddModal(false);
-      setNewDoctor({ doctorName: "", speciality: "", doctorFee: "", phone: "", email: "" });
+      setNewCourse({ courseName: "", courseDuration: "", courseFee: "", instructor: "", courseDescription: "" });
     } catch (error) {
-      console.error("Error adding doctor:", error);
+      console.error("Error adding course:", error);
     }
   };
 
   // Open Edit Modal
-  const openEditModal = (doctor) => {
-    setSelectedDoctor(doctor);
-    setNewDoctor(doctor);
+  const openEditModal = (course) => {
+    setSelectedCourse(course);
+    setNewCourse(course);
     setShowEditModal(true);
   };
 
-  // Update Doctor
-  const handleUpdateDoctor = async () => {
+  // Update Course
+  const handleUpdateCourse = async () => {
     try {
-      const response = await axios.put(`http://localhost:8083/cw-app/doctors/${selectedDoctor.doctorId}`, newDoctor);
-      setDoctors((prev) =>
-        prev.map((doc) => (doc.doctorId === selectedDoctor.doctorId ? response.data : doc))
+      const response = await axios.put(`http://localhost:8083/cw-app/courses/${selectedCourse.courseId}`, newCourse);
+      setCourses((prev) =>
+        prev.map((c) => (c.courseId === selectedCourse.courseId ? response.data : c))
       );
       setShowEditModal(false);
     } catch (error) {
-      console.error("Error updating doctor:", error);
+      console.error("Error updating course:", error);
     }
   };
 
-  // Delete Doctor
-  const handleDeleteDoctor = async (doctorId) => {
+  // Delete Course
+  const handleDeleteCourse = async (courseId) => {
     try {
-      await axios.delete(`http://localhost:8083/cw-app/doctors/${doctorId}`);
-      setDoctors(doctors.filter((doc) => doc.doctorId !== doctorId));
+      await axios.delete(`http://localhost:8083/cw-app/courses/${courseId}`);
+      setCourses(courses.filter((c) => c.courseId !== courseId));
     } catch (error) {
-      console.error("Error deleting doctor:", error);
+      console.error("Error deleting course:", error);
     }
   };
 
@@ -101,48 +101,46 @@ const Doctors = () => {
           <FaArrowLeft /> Back to Home
         </Button>
         <Button variant="success" onClick={() => setShowAddModal(true)}>
-          <FaPlus /> Add Doctor
+          <FaPlus /> Add Course
         </Button>
       </div>
 
-      <h2 className="mt-3">Doctors List</h2>
+      <h2 className="mt-3">Courses List</h2>
 
       {error && <Alert variant="danger">{error}</Alert>}
       {loading ? (
         <div className="d-flex justify-content-center">
           <Spinner animation="border" variant="primary" />
         </div>
-      ) : doctors.length === 0 ? (
-        <Alert variant="info">No doctors available at the moment.</Alert>
+      ) : courses.length === 0 ? (
+        <Alert variant="info">No courses available at the moment.</Alert>
       ) : (
         <Table striped bordered hover className="mt-3">
           <thead>
             <tr>
               <th>#</th>
-              <th>Doctor</th>
-              <th>Specialty</th>
+              <th>Course</th>
+              <th>Duration</th>
               <th>Fee ($)</th>
-              <th>Phone</th>
-              <th>Email</th>
+              <th>Instructor</th>
+              <th>Description</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {doctors.map((doctor, index) => (
-              <tr key={doctor.doctorId}>
+            {courses.map((course, index) => (
+              <tr key={course.courseId}>
                 <td>{index + 1}</td>
+                <td>{course.courseName}</td>
+                <td>{course.courseDuration}</td>
+                <td>${course.courseFee}</td>
+                <td>{course.instructor}</td>
+                <td>{course.courseDescription}</td>
                 <td>
-                  <FaUserMd className="text-primary me-2" /> {doctor.doctorName}
-                </td>
-                <td>{doctor.speciality}</td>
-                <td>${doctor.doctorFee}</td>
-                <td>{doctor.phone}</td>
-                <td>{doctor.email}</td>
-                <td>
-                  <Button variant="outline-primary" size="sm" className="me-2" onClick={() => openEditModal(doctor)}>
+                  <Button variant="outline-primary" size="sm" className="me-2" onClick={() => openEditModal(course)}>
                     <FaEdit />
                   </Button>
-                  <Button variant="outline-danger" size="sm" onClick={() => handleDeleteDoctor(doctor.doctorId)}>
+                  <Button variant="outline-danger" size="sm" onClick={() => handleDeleteCourse(course.courseId)}>
                     <FaTrash />
                   </Button>
                 </td>
@@ -152,49 +150,49 @@ const Doctors = () => {
         </Table>
       )}
 
-      {/* Add Doctor Modal */}
+      {/* Add Course Modal */}
       <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Doctor</Modal.Title>
+          <Modal.Title>Add Course</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            {["doctorName", "speciality", "doctorFee", "phone", "email"].map((field) => (
+            {["courseName", "courseDuration", "courseFee", "instructor", "courseDescription"].map((field) => (
               <Form.Group className="mb-3" key={field}>
                 <Form.Label>{field.replace(/([A-Z])/g, " $1").trim()}</Form.Label>
-                <Form.Control type="text" name={field} value={newDoctor[field]} onChange={handleInputChange} required />
+                <Form.Control type="text" name={field} value={newCourse[field]} onChange={handleInputChange} required />
               </Form.Group>
             ))}
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowAddModal(false)}>Close</Button>
-          <Button variant="primary" onClick={handleAddDoctor}>Add Doctor</Button>
+          <Button variant="primary" onClick={handleAddCourse}>Add Course</Button>
         </Modal.Footer>
       </Modal>
 
-      {/* Edit Doctor Modal */}
+      {/* Edit Course Modal */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Doctor</Modal.Title>
+          <Modal.Title>Edit Course</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            {["doctorName", "speciality", "doctorFee", "phone", "email"].map((field) => (
+            {["courseName", "courseDuration", "courseFee", "instructor", "courseDescription"].map((field) => (
               <Form.Group className="mb-3" key={field}>
                 <Form.Label>{field.replace(/([A-Z])/g, " $1").trim()}</Form.Label>
-                <Form.Control type="text" name={field} value={newDoctor[field]} onChange={handleInputChange} required />
+                <Form.Control type="text" name={field} value={newCourse[field]} onChange={handleInputChange} required />
               </Form.Group>
             ))}
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowEditModal(false)}>Close</Button>
-          <Button variant="primary" onClick={handleUpdateDoctor}>Update Doctor</Button>
+          <Button variant="primary" onClick={handleUpdateCourse}>Update Course</Button>
         </Modal.Footer>
       </Modal>
     </div>
   );
 };
 
-export default Doctors;
+export default Courses;
